@@ -1,7 +1,7 @@
 <!-- Sidebar Navigation -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
-    <img src="../logo.jpeg" alt="Logo" class="sidebar-logo" />
+    <img src="/logo.jpeg" alt="Logo" class="sidebar-logo" />
     <span>Seres das Estrelas</span>
   </div>
   <nav class="sidebar-nav">
@@ -13,6 +13,9 @@
     </a>
     <a href="anamnese-ver.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'anamnese-ver.php' ? 'active' : '' ?>">
       <i class="bi bi-clipboard-pulse"></i><span>Anamneses</span>
+    </a>
+    <a href="blocos.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'blocos.php' ? 'active' : '' ?>">
+      <i class="bi bi-stars"></i><span>Blocos</span>
     </a>
     <a href="eventos-admin.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'eventos-admin.php' ? 'active' : '' ?>">
       <i class="bi bi-calendar-event"></i><span>Eventos</span>

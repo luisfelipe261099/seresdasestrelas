@@ -108,7 +108,7 @@ if (isset($_GET['editar'])) {
         <h4 class="d-inline fw-bold mb-0">Eventos</h4>
         <span class="text-muted-ice ms-2 small">(<?= count($eventos) ?>)</span>
       </div>
-      <a href="../eventos.php" target="_blank" class="btn btn-outline-gold btn-sm"><i class="bi bi-eye me-1"></i>Ver Página Pública</a>
+      <a href="/eventos.php" target="_blank" class="btn btn-outline-gold btn-sm"><i class="bi bi-eye me-1"></i>Ver Página Pública</a>
     </div>
 
     <?php if ($msg): ?>

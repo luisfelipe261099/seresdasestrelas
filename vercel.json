@@ -15,11 +15,17 @@
     },
     {
       "src": "eventos.php",
-      "use": "vercel-php@0.7.1"
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": "system/config.php"
+      }
     },
     {
       "src": "system/**/*.php",
-      "use": "vercel-php@0.7.1"
+      "use": "vercel-php@0.7.1",
+      "config": {
+        "includeFiles": "system/**"
+      }
     },
     {
       "src": "system/**/*.{css,js}",

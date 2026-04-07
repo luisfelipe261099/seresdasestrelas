@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
       <div class="anamnese-wrap">
         <div class="text-center mb-4">
-          <img src="../logo.jpeg" alt="Logo" style="height:60px;border-radius:50%;" class="mb-3" />
+          <img src="/logo.jpeg" alt="Logo" style="height:60px;border-radius:50%;" class="mb-3" />
           <h2 class="fw-bold" style="font-family:'Montserrat',sans-serif;">Ficha de <span class="text-gold">Anamnese</span></h2>
           <p style="color:rgba(248,249,250,0.6); font-size:0.95rem;">Preencha com atenção. Suas respostas ajudarão a Joyce a preparar seu atendimento.</p>
         </div>
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="bi bi-check-circle"></i>
             <h5 class="fw-bold mt-3">Anamnese enviada com sucesso!</h5>
             <p style="color:rgba(248,249,250,0.6);">A Joyce receberá suas respostas antes da consulta. Obrigada!</p>
-            <a href="../index.html" class="btn btn-gold mt-2">Voltar ao Site</a>
+            <a href="/" class="btn btn-gold mt-2">Voltar ao Site</a>
           </div>
         <?php else: ?>
           <?php if ($erro): ?>

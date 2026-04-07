@@ -57,22 +57,34 @@ function e(string $str): string {
 }
 
 function bloco_nome(int $b): string {
-    return match($b) {
-        1 => 'Limpeza e Desintoxicação',
-        2 => 'Reequilíbrio e Cura',
-        3 => 'Expansão e Propósito',
-        default => 'Indefinido'
-    };
+    static $cache = null;
+    if ($cache === null) {
+        try {
+            $db = getDB();
+            $rows = $db->query("SELECT numero, nome FROM blocos ORDER BY ordem ASC")->fetchAll();
+            $cache = [];
+            foreach ($rows as $r) $cache[(int)$r['numero']] = $r['nome'];
+        } catch (\Exception $e) {
+            $cache = [1 => 'Bloco 1', 2 => 'Bloco 2', 3 => 'Bloco 3'];
+        }
+    }
+    return $cache[$b] ?? 'Indefinido';
 }
 
 function bloco_badge(int $b): string {
-    $cls = match($b) {
-        1 => 'badge-bloco1',
-        2 => 'badge-bloco2',
-        3 => 'badge-bloco3',
-        default => 'badge-bloco1'
-    };
-    return '<span class="badge-bloco ' . $cls . '">Bloco ' . $b . '</span>';
+    static $cacheB = null;
+    if ($cacheB === null) {
+        try {
+            $db = getDB();
+            $rows = $db->query("SELECT numero, cor FROM blocos ORDER BY ordem ASC")->fetchAll();
+            $cacheB = [];
+            foreach ($rows as $r) $cacheB[(int)$r['numero']] = $r['cor'];
+        } catch (\Exception $e) {
+            $cacheB = [1 => '#60a5fa', 2 => '#a78bfa', 3 => '#E0A458'];
+        }
+    }
+    $cor = $cacheB[$b] ?? '#E0A458';
+    return '<span class="badge-bloco" style="background:' . $cor . '20;color:' . $cor . ';border:1px solid ' . $cor . '40;">Bloco ' . $b . '</span>';
 }
 
 function whatsapp_link(string $num): string {

@@ -10,9 +10,8 @@ $user = currentUser();
 
 // Cards resumo
 $totalAtivos   = $db->query("SELECT COUNT(*) FROM pacientes WHERE status_ativo = 1")->fetchColumn();
-$bloco1        = $db->query("SELECT COUNT(*) FROM pacientes WHERE bloco_atual = 1 AND status_ativo = 1")->fetchColumn();
-$bloco2        = $db->query("SELECT COUNT(*) FROM pacientes WHERE bloco_atual = 2 AND status_ativo = 1")->fetchColumn();
-$bloco3        = $db->query("SELECT COUNT(*) FROM pacientes WHERE bloco_atual = 3 AND status_ativo = 1")->fetchColumn();
+// Blocos dinâmicos
+$blocosDB = $db->query("SELECT b.numero, b.nome, b.cor, (SELECT COUNT(*) FROM pacientes p WHERE p.bloco_atual = b.numero AND p.status_ativo = 1) AS total FROM blocos b WHERE b.ativo = 1 ORDER BY b.ordem ASC")->fetchAll();
 
 // Sessões da semana
 $sessoesSemanais = $db->query("SELECT COUNT(*) FROM sessoes_notas WHERE data_sessao >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY) AND data_sessao <= DATE_ADD(CURDATE(), INTERVAL 7-DAYOFWEEK(CURDATE()) DAY)")->fetchColumn();
@@ -78,10 +77,10 @@ $anamnesesPendentes = $db->query("
       </div>
       <div class="col-6 col-lg-3">
         <div class="glass-card stat-card p-3 stat-card--blocos">
-          <div class="d-flex justify-content-between small mb-1">
-            <span class="badge-bloco badge-bloco1">B1: <?= $bloco1 ?></span>
-            <span class="badge-bloco badge-bloco2">B2: <?= $bloco2 ?></span>
-            <span class="badge-bloco badge-bloco3">B3: <?= $bloco3 ?></span>
+          <div class="d-flex flex-wrap gap-1 small mb-1">
+            <?php foreach ($blocosDB as $bl): ?>
+              <span class="badge-bloco" style="background:<?= e($bl['cor']) ?>20;color:<?= e($bl['cor']) ?>;border:1px solid <?= e($bl['cor']) ?>40;">B<?= (int)$bl['numero'] ?>: <?= (int)$bl['total'] ?></span>
+            <?php endforeach; ?>
           </div>
           <span class="stat-card-label mt-1">Distribuição de Blocos</span>
         </div>

@@ -16,13 +16,18 @@ $stmt->execute([$id]);
 $pac = $stmt->fetch();
 if (!$pac) { header('Location: pacientes.php'); exit; }
 
+// Buscar blocos ativos do banco
+$blocosDisp = $db->query("SELECT * FROM blocos WHERE ativo = 1 ORDER BY ordem ASC, numero ASC")->fetchAll();
+$blocosMap  = [];
+foreach ($blocosDisp as $bl) $blocosMap[$bl['numero']] = $bl;
+
 // Atualizar bloco
 $confete = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     csrf_check();
 
     if ($_POST['action'] === 'update_bloco') {
-        $novoBloco = max(1, min(3, (int)$_POST['bloco_atual']));
+        $novoBloco = (int)$_POST['bloco_atual'];
         $blocoAnterior = $pac['bloco_atual'];
         $stUp = $db->prepare('UPDATE pacientes SET bloco_atual = ? WHERE id = ?');
         $stUp->execute([$novoBloco, $id]);
@@ -108,18 +113,38 @@ $anamnese = $anam->fetch();
             <input type="hidden" name="csrf" value="<?= csrf_token() ?>" />
             <input type="hidden" name="action" value="update_bloco" />
             <div class="bloco-selector mb-3">
-              <?php for ($b = 1; $b <= 3; $b++): ?>
-                <label class="bloco-option <?= $pac['bloco_atual'] == $b ? 'active' : '' ?>">
-                  <input type="radio" name="bloco_atual" value="<?= $b ?>" <?= $pac['bloco_atual'] == $b ? 'checked' : '' ?> />
-                  <span class="bloco-option-inner bloco-option-<?= $b ?>">
-                    <strong>Bloco <?= $b ?></strong>
-                    <small><?= bloco_nome($b) ?></small>
+              <?php foreach ($blocosDisp as $bl): ?>
+                <label class="bloco-option <?= $pac['bloco_atual'] == $bl['numero'] ? 'active' : '' ?>">
+                  <input type="radio" name="bloco_atual" value="<?= (int)$bl['numero'] ?>" <?= $pac['bloco_atual'] == $bl['numero'] ? 'checked' : '' ?> />
+                  <span class="bloco-option-inner" style="border-left:3px solid <?= e($bl['cor']) ?> !important;">
+                    <strong>Bloco <?= (int)$bl['numero'] ?></strong>
+                    <small><?= e($bl['nome']) ?></small>
                   </span>
                 </label>
-              <?php endfor; ?>
+              <?php endforeach; ?>
             </div>
             <button type="submit" class="btn btn-gold btn-sm w-100"><i class="bi bi-arrow-up-circle me-1"></i>Atualizar Bloco</button>
           </form>
+        </div>
+
+        <!-- Info Financeira -->
+        <div class="glass-card p-4 mb-4">
+          <h6 class="fw-bold mb-3"><i class="bi bi-wallet2 me-2 text-gold"></i>Financeiro</h6>
+          <ul class="list-unstyled small mb-0">
+            <li class="mb-2"><strong>Tipo:</strong>
+              <?= match($pac['tipo_cobranca'] ?? 'mensal') { 'mensal' => 'Mensal', 'avista' => 'À Vista', 'parcelado' => 'Parcelado', default => '—' } ?>
+            </li>
+            <li class="mb-2"><strong>Valor:</strong> R$ <?= number_format((float)($pac['valor_mensal'] ?? 0), 2, ',', '.') ?></li>
+            <li class="mb-2"><strong>Pagamento:</strong> <?= e(ucfirst($pac['forma_pagamento'] ?? 'pix')) ?></li>
+            <?php if (($pac['tipo_cobranca'] ?? '') === 'parcelado'): ?>
+              <li class="mb-2"><strong>Parcelas:</strong> <?= (int)($pac['parcelas_pagas'] ?? 0) ?>/<?= (int)($pac['parcelas_total'] ?? 1) ?></li>
+            <?php endif; ?>
+            <li class="mb-2"><strong>Vencimento:</strong> dia <?= (int)($pac['dia_vencimento'] ?? 10) ?></li>
+            <?php if ($pac['observacao_financeira'] ?? ''): ?>
+              <li><strong>Obs:</strong> <?= e($pac['observacao_financeira']) ?></li>
+            <?php endif; ?>
+          </ul>
+          <a href="mensalidades.php" class="btn btn-outline-gold btn-sm w-100 mt-3"><i class="bi bi-receipt me-1"></i>Ver Mensalidades</a>
         </div>
 
         <?php if ($anamnese): ?>

@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="d-flex align-items-center justify-content-center" style="min-height:100vh;">
 
   <div class="login-card glass-card p-5 text-center">
-    <img src="../logo.jpeg" alt="Logo" class="login-logo mb-3" />
+    <img src="/logo.jpeg" alt="Logo" class="login-logo mb-3" />
     <h4 class="fw-bold mb-1">Seres das Estrelas</h4>
     <p class="text-muted-ice mb-4">Acesso ao Sistema</p>
 
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </button>
     </form>
 
-    <a href="../index.html" class="d-block mt-4 small text-muted-ice">&larr; Voltar ao site</a>
+    <a href="/" class="d-block mt-4 small text-muted-ice">&larr; Voltar ao site</a>
   </div>
 
 </body>

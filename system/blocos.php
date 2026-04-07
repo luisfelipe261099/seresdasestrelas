@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $st = $db->prepare("INSERT INTO blocos (numero, nome, descricao, cor, ordem) VALUES (?,?,?,?,?)");
             $st->execute([$numero, $nome, $descricao ?: null, $cor, $ordem]);
         }
+        invalidar_cache_blocos();
         header("Location: blocos.php?msg=criado");
         exit;
     }
@@ -36,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $st = $db->prepare("UPDATE blocos SET numero = ?, nome = ?, descricao = ?, cor = ? WHERE id = ?");
             $st->execute([$numero, $nome, $descricao ?: null, $cor, $bid]);
         }
+        invalidar_cache_blocos();
         header("Location: blocos.php?msg=atualizado");
         exit;
     }
@@ -43,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($_POST['action'] === 'toggle') {
         $bid = (int)$_POST['bloco_id'];
         $db->prepare("UPDATE blocos SET ativo = NOT ativo WHERE id = ?")->execute([$bid]);
+        invalidar_cache_blocos();
         header("Location: blocos.php?msg=toggle");
         exit;
     }
@@ -52,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         foreach ($ids as $i => $bid) {
             $db->prepare("UPDATE blocos SET ordem = ? WHERE id = ?")->execute([$i + 1, $bid]);
         }
+        invalidar_cache_blocos();
         header("Location: blocos.php?msg=reordenado");
         exit;
     }

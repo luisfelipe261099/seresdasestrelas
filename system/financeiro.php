@@ -11,18 +11,38 @@ $user = currentUser();
 $mesAtual  = $_GET['mes'] ?? date('Y-m');
 $mesLabel  = date('m/Y', strtotime($mesAtual . '-01'));
 
-// Receitas e despesas do mês
-$stRec = $db->prepare("SELECT COALESCE(SUM(valor),0) FROM lancamentos WHERE tipo='receita' AND DATE_FORMAT(data_lancamento,'%Y-%m') = ?");
-$stRec->execute([$mesAtual]);
-$totalReceitas = (float)$stRec->fetchColumn();
+// Query 1: Receitas + despesas + categorias tudo junto
+$stFin = $db->prepare("
+    SELECT tipo, categoria, 
+           SUM(valor) as total,
+           COUNT(*) as qtd
+    FROM lancamentos 
+    WHERE DATE_FORMAT(data_lancamento,'%Y-%m') = ?
+    GROUP BY tipo, categoria
+");
+$stFin->execute([$mesAtual]);
+$finRows = $stFin->fetchAll();
 
-$stDesp = $db->prepare("SELECT COALESCE(SUM(valor),0) FROM lancamentos WHERE tipo='despesa' AND DATE_FORMAT(data_lancamento,'%Y-%m') = ?");
-$stDesp->execute([$mesAtual]);
-$totalDespesas = (float)$stDesp->fetchColumn();
-
+$totalReceitas = 0.0;
+$totalDespesas = 0.0;
+$receitasPorCat = [];
+$despesasPorCat = [];
+foreach ($finRows as $r) {
+    if ($r['tipo'] === 'receita') {
+        $totalReceitas += (float)$r['total'];
+        $receitasPorCat[] = ['categoria' => $r['categoria'], 'total' => $r['total']];
+    } else {
+        $totalDespesas += (float)$r['total'];
+        $despesasPorCat[] = ['categoria' => $r['categoria'], 'total' => $r['total']];
+    }
+}
+usort($receitasPorCat, fn($a, $b) => $b['total'] <=> $a['total']);
+usort($despesasPorCat, fn($a, $b) => $b['total'] <=> $a['total']);
+$receitasPorCat = array_slice($receitasPorCat, 0, 5);
+$despesasPorCat = array_slice($despesasPorCat, 0, 5);
 $saldo = $totalReceitas - $totalDespesas;
 
-// Mensalidades do mês
+// Query 2: Mensalidades do mês
 $stMens = $db->prepare("SELECT status, COUNT(*) as qtd, COALESCE(SUM(valor),0) as total FROM mensalidades WHERE mes_referencia = ? GROUP BY status");
 $stMens->execute([$mesAtual]);
 $mensPorStatus = [];
@@ -35,22 +55,12 @@ $mensAtrasadas = (int)($mensPorStatus['atrasado']['qtd'] ?? 0);
 $valorRecebido = (float)($mensPorStatus['pago']['total'] ?? 0);
 $valorPendente = (float)($mensPorStatus['pendente']['total'] ?? 0) + (float)($mensPorStatus['atrasado']['total'] ?? 0);
 
-// Receitas por categoria (mês)
-$stCat = $db->prepare("SELECT categoria, SUM(valor) as total FROM lancamentos WHERE tipo='receita' AND DATE_FORMAT(data_lancamento,'%Y-%m') = ? GROUP BY categoria ORDER BY total DESC LIMIT 5");
-$stCat->execute([$mesAtual]);
-$receitasPorCat = $stCat->fetchAll();
-
-// Despesas por categoria (mês)
-$stDespCat = $db->prepare("SELECT categoria, SUM(valor) as total FROM lancamentos WHERE tipo='despesa' AND DATE_FORMAT(data_lancamento,'%Y-%m') = ? GROUP BY categoria ORDER BY total DESC LIMIT 5");
-$stDespCat->execute([$mesAtual]);
-$despesasPorCat = $stDespCat->fetchAll();
-
-// Últimos lançamentos
+// Query 3: Últimos lançamentos
 $stUlt = $db->prepare("SELECT l.*, p.nome AS paciente_nome FROM lancamentos l LEFT JOIN pacientes p ON p.id = l.paciente_id WHERE DATE_FORMAT(l.data_lancamento,'%Y-%m') = ? ORDER BY l.data_lancamento DESC, l.id DESC LIMIT 15");
 $stUlt->execute([$mesAtual]);
 $ultimosLanc = $stUlt->fetchAll();
 
-// Faturamento últimos 6 meses (para mini gráfico)
+// Query 4: Faturamento últimos 6 meses (para mini gráfico)
 $fat6 = $db->query("
     SELECT DATE_FORMAT(data_lancamento,'%Y-%m') AS mes, 
            SUM(CASE WHEN tipo='receita' THEN valor ELSE 0 END) AS receitas,

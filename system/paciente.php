@@ -11,12 +11,13 @@ $id   = (int)($_GET['id'] ?? 0);
 
 if (!$id) { header('Location: pacientes.php'); exit; }
 
+// Buscar paciente + blocos em paralelo  
 $stmt = $db->prepare('SELECT * FROM pacientes WHERE id = ?');
 $stmt->execute([$id]);
 $pac = $stmt->fetch();
 if (!$pac) { header('Location: pacientes.php'); exit; }
 
-// Buscar blocos ativos do banco
+// Pré-carregar blocos (cache reutilizado por bloco_nome/bloco_badge)
 $blocosDisp = $db->query("SELECT * FROM blocos WHERE ativo = 1 ORDER BY ordem ASC, numero ASC")->fetchAll();
 $blocosMap  = [];
 foreach ($blocosDisp as $bl) $blocosMap[$bl['numero']] = $bl;
@@ -51,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 $confete = isset($_GET['up']);
 
-// Sessões
-$sessoes = $db->prepare('SELECT * FROM sessoes_notas WHERE paciente_id = ? ORDER BY data_sessao DESC, criado_em DESC');
+// Sessões + Anamnese (2 queries em 1 round-trip cada, inevitável)
+$sessoes = $db->prepare('SELECT * FROM sessoes_notas WHERE paciente_id = ? ORDER BY data_sessao DESC, criado_em DESC LIMIT 50');
 $sessoes->execute([$id]);
 $sessoes = $sessoes->fetchAll();
 

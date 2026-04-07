@@ -11,8 +11,10 @@ $user = currentUser();
 $busca = trim($_GET['q'] ?? '');
 $filtroBloco = (int)($_GET['bloco'] ?? 0);
 
-$sql = "SELECT p.*, (SELECT MAX(s.data_sessao) FROM sessoes_notas s WHERE s.paciente_id = p.id) AS ultima_sessao
-        FROM pacientes p WHERE p.status_ativo = 1";
+$sql = "SELECT p.*, MAX(s.data_sessao) AS ultima_sessao
+        FROM pacientes p
+        LEFT JOIN sessoes_notas s ON s.paciente_id = p.id
+        WHERE p.status_ativo = 1";
 $params = [];
 
 if ($busca) {
@@ -24,7 +26,7 @@ if ($filtroBloco >= 1 && $filtroBloco <= 3) {
     $sql .= " AND p.bloco_atual = ?";
     $params[] = $filtroBloco;
 }
-$sql .= " ORDER BY p.nome ASC";
+$sql .= " GROUP BY p.id ORDER BY p.nome ASC";
 
 $stmt = $db->prepare($sql);
 $stmt->execute($params);

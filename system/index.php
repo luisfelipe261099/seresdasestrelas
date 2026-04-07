@@ -8,15 +8,25 @@ requireLogin();
 $db   = getDB();
 $user = currentUser();
 
-// Cards resumo
-$totalAtivos   = $db->query("SELECT COUNT(*) FROM pacientes WHERE status_ativo = 1")->fetchColumn();
-// Blocos dinâmicos
-$blocosDB = $db->query("SELECT b.numero, b.nome, b.cor, (SELECT COUNT(*) FROM pacientes p WHERE p.bloco_atual = b.numero AND p.status_ativo = 1) AS total FROM blocos b WHERE b.ativo = 1 ORDER BY b.ordem ASC")->fetchAll();
+// Query 1: Totais + Blocos + Sessões semana (tudo junto)
+$resumo = $db->query("
+    SELECT
+      (SELECT COUNT(*) FROM pacientes WHERE status_ativo = 1) AS total_ativos,
+      (SELECT COUNT(*) FROM sessoes_notas WHERE data_sessao >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY) AND data_sessao <= DATE_ADD(CURDATE(), INTERVAL 7-DAYOFWEEK(CURDATE()) DAY)) AS sessoes_semana
+")->fetch();
+$totalAtivos     = $resumo['total_ativos'];
+$sessoesSemanais = $resumo['sessoes_semana'];
 
-// Sessões da semana
-$sessoesSemanais = $db->query("SELECT COUNT(*) FROM sessoes_notas WHERE data_sessao >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY) AND data_sessao <= DATE_ADD(CURDATE(), INTERVAL 7-DAYOFWEEK(CURDATE()) DAY)")->fetchColumn();
+$blocosDB = $db->query("
+    SELECT b.numero, b.nome, b.cor, COUNT(p.id) AS total
+    FROM blocos b
+    LEFT JOIN pacientes p ON p.bloco_atual = b.numero AND p.status_ativo = 1
+    WHERE b.ativo = 1
+    GROUP BY b.numero, b.nome, b.cor, b.ordem
+    ORDER BY b.ordem ASC
+")->fetchAll();
 
-// Agenda do dia
+// Query 2: Agenda do dia + anamneses pendentes
 $agendaHoje = $db->query("
     SELECT s.id, s.data_sessao, s.tipo_tratamento, s.bloco_referente, p.nome, p.whatsapp
     FROM sessoes_notas s
@@ -26,7 +36,6 @@ $agendaHoje = $db->query("
     LIMIT 10
 ")->fetchAll();
 
-// Anamneses recentes não vinculadas
 $anamnesesPendentes = $db->query("
     SELECT id, nome, criado_em FROM anamneses WHERE paciente_id IS NULL ORDER BY criado_em DESC LIMIT 5
 ")->fetchAll();

@@ -32,6 +32,8 @@ function getDB(): PDO {
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
+        PDO::ATTR_PERSISTENT         => true,
+        PDO::ATTR_TIMEOUT            => 5,
     ];
 
     // TiDB Cloud exige SSL
@@ -56,35 +58,48 @@ function e(string $str): string {
     return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
 }
 
-function bloco_nome(int $b): string {
+// Preload de blocos — cache em arquivo (60s) para evitar query DB em toda navegação
+function _preloadBlocos(): array {
     static $cache = null;
-    if ($cache === null) {
-        try {
-            $db = getDB();
-            $rows = $db->query("SELECT numero, nome FROM blocos ORDER BY ordem ASC")->fetchAll();
-            $cache = [];
-            foreach ($rows as $r) $cache[(int)$r['numero']] = $r['nome'];
-        } catch (\Exception $e) {
-            $cache = [1 => 'Bloco 1', 2 => 'Bloco 2', 3 => 'Bloco 3'];
-        }
+    if ($cache !== null) return $cache;
+
+    $cacheFile = sys_get_temp_dir() . '/se_blocos_cache.json';
+    if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < 60) {
+        $data = json_decode(file_get_contents($cacheFile), true);
+        if ($data) { $cache = $data; return $cache; }
     }
-    return $cache[$b] ?? 'Indefinido';
+
+    try {
+        $db = getDB();
+        $rows = $db->query("SELECT numero, nome, cor FROM blocos ORDER BY ordem ASC")->fetchAll();
+        $cache = [];
+        foreach ($rows as $r) {
+            $cache[(int)$r['numero']] = ['nome' => $r['nome'], 'cor' => $r['cor']];
+        }
+        @file_put_contents($cacheFile, json_encode($cache));
+    } catch (\Exception $e) {
+        $cache = [
+            1 => ['nome' => 'Bloco 1', 'cor' => '#60a5fa'],
+            2 => ['nome' => 'Bloco 2', 'cor' => '#a78bfa'],
+            3 => ['nome' => 'Bloco 3', 'cor' => '#E0A458'],
+        ];
+    }
+    return $cache;
+}
+
+function bloco_nome(int $b): string {
+    $blocos = _preloadBlocos();
+    return $blocos[$b]['nome'] ?? 'Indefinido';
 }
 
 function bloco_badge(int $b): string {
-    static $cacheB = null;
-    if ($cacheB === null) {
-        try {
-            $db = getDB();
-            $rows = $db->query("SELECT numero, cor FROM blocos ORDER BY ordem ASC")->fetchAll();
-            $cacheB = [];
-            foreach ($rows as $r) $cacheB[(int)$r['numero']] = $r['cor'];
-        } catch (\Exception $e) {
-            $cacheB = [1 => '#60a5fa', 2 => '#a78bfa', 3 => '#E0A458'];
-        }
-    }
-    $cor = $cacheB[$b] ?? '#E0A458';
+    $blocos = _preloadBlocos();
+    $cor = $blocos[$b]['cor'] ?? '#E0A458';
     return '<span class="badge-bloco" style="background:' . $cor . '20;color:' . $cor . ';border:1px solid ' . $cor . '40;">Bloco ' . $b . '</span>';
+}
+
+function invalidar_cache_blocos(): void {
+    @unlink(sys_get_temp_dir() . '/se_blocos_cache.json');
 }
 
 function whatsapp_link(string $num): string {

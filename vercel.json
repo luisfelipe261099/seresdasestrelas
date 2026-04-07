@@ -35,12 +35,5 @@
     { "src": "/(.*\\.css)", "dest": "/$1" },
     { "src": "/(.*\\.jpeg)", "dest": "/$1" },
     { "src": "/", "dest": "/index.html" }
-  ],
-  "env": {
-    "TIDB_HOST": "@tidb-host",
-    "TIDB_PORT": "@tidb-port",
-    "TIDB_USER": "@tidb-user",
-    "TIDB_PASS": "@tidb-pass",
-    "TIDB_DB": "@tidb-db"
-  }
+  ]
 }

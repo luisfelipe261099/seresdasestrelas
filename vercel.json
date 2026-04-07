@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.jpeg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "system/**/*.php",
+      "use": "vercel-php@0.7.1"
+    },
+    {
+      "src": "system/**/*.{css,js}",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/system/(.*\\.php)", "dest": "/system/$1" },
+    { "src": "/system/(.*\\.css)", "dest": "/system/$1" },
+    { "src": "/system/(.*\\.js)", "dest": "/system/$1" },
+    { "src": "/(.*\\.html)", "dest": "/$1" },
+    { "src": "/(.*\\.css)", "dest": "/$1" },
+    { "src": "/(.*\\.jpeg)", "dest": "/$1" },
+    { "src": "/", "dest": "/index.html" }
+  ],
+  "env": {
+    "TIDB_HOST": "@tidb-host",
+    "TIDB_PORT": "@tidb-port",
+    "TIDB_USER": "@tidb-user",
+    "TIDB_PASS": "@tidb-pass",
+    "TIDB_DB": "@tidb-db"
+  }
+}

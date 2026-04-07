@@ -58,9 +58,9 @@ $sessoes->execute([$id]);
 $sessoes = $sessoes->fetchAll();
 
 // Anamnese
-$anam = $db->prepare('SELECT * FROM anamneses WHERE paciente_id = ? ORDER BY criado_em DESC LIMIT 1');
+$anam = $db->prepare('SELECT * FROM anamneses WHERE paciente_id = ? ORDER BY criado_em DESC');
 $anam->execute([$id]);
-$anamnese = $anam->fetch();
+$anamneses = $anam->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -148,21 +148,24 @@ $anamnese = $anam->fetch();
           <a href="mensalidades.php" class="btn btn-outline-gold btn-sm w-100 mt-3"><i class="bi bi-receipt me-1"></i>Ver Mensalidades</a>
         </div>
 
-        <?php if ($anamnese): ?>
+        <?php if (!empty($anamneses)): ?>
         <div class="glass-card p-4">
-          <h6 class="fw-bold mb-3"><i class="bi bi-clipboard-pulse me-2 text-gold"></i>Anamnese</h6>
-          <p class="text-muted-ice small mb-1">Enviada em <?= date('d/m/Y', strtotime($anamnese['criado_em'])) ?></p>
-          <?php
-            $resp = json_decode($anamnese['respostas_json'], true);
-            if ($resp):
-              foreach ($resp as $key => $val): ?>
-                <div class="mb-2">
-                  <strong class="small"><?= e($key) ?>:</strong>
-                  <p class="small text-muted-ice mb-0"><?= e($val) ?></p>
-                </div>
-              <?php endforeach;
-            endif;
-          ?>
+          <h6 class="fw-bold mb-3"><i class="bi bi-clipboard-pulse me-2 text-gold"></i>Anamnese<?= count($anamneses) > 1 ? 's' : '' ?> (<?= count($anamneses) ?>)</h6>
+          <?php foreach ($anamneses as $idx => $anamnese): ?>
+            <?php if ($idx > 0): ?><hr style="border-color:rgba(248,249,250,0.1);" /><?php endif; ?>
+            <p class="text-muted-ice small mb-1">Enviada em <?= date('d/m/Y', strtotime($anamnese['criado_em'])) ?></p>
+            <?php
+              $resp = json_decode($anamnese['respostas_json'], true);
+              if ($resp):
+                foreach ($resp as $key => $val): ?>
+                  <div class="mb-2">
+                    <strong class="small"><?= e($key) ?>:</strong>
+                    <p class="small text-muted-ice mb-0"><?= e($val) ?></p>
+                  </div>
+                <?php endforeach;
+              endif;
+            ?>
+          <?php endforeach; ?>
         </div>
         <?php endif; ?>
       </div>

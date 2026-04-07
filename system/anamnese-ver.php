@@ -39,7 +39,7 @@ $lista = $db->query('SELECT a.*, p.nome AS pac_nome FROM anamneses a LEFT JOIN p
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anamneses — Seres das Estrelas OS</title>
+  <title>Fichas de Acolhimento — Seres das Estrelas OS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
@@ -54,7 +54,7 @@ $lista = $db->query('SELECT a.*, p.nome AS pac_nome FROM anamneses a LEFT JOIN p
     <div class="topbar mb-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
       <div>
         <button class="btn btn-sm btn-outline-light d-lg-none me-2" id="sidebarToggle"><i class="bi bi-list"></i></button>
-        <h4 class="d-inline fw-bold mb-0">Anamneses</h4>
+        <h4 class="d-inline fw-bold mb-0">Fichas de Acolhimento</h4>
       </div>
       <button class="btn btn-sm btn-outline-gold" id="btnCopyLink" onclick="copyAnamneseLink()">
         <i class="bi bi-link-45deg me-1"></i>Copiar Link de Preenchimento
@@ -120,7 +120,7 @@ $lista = $db->query('SELECT a.*, p.nome AS pac_nome FROM anamneses a LEFT JOIN p
       <!-- List view -->
       <div class="glass-card p-3">
         <?php if (empty($lista)): ?>
-          <p class="text-muted-ice text-center py-4 mb-0">Nenhuma anamnese recebida.</p>
+          <p class="text-muted-ice text-center py-4 mb-0">Nenhuma ficha de acolhimento recebida.</p>
         <?php else: ?>
           <div class="table-responsive">
             <table class="table table-dark-custom mb-0 align-middle">

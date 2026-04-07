@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Anamnese — Seres das Estrelas</title>
+  <title>Ficha de Acolhimento — Seres das Estrelas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
@@ -78,14 +78,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="anamnese-wrap">
         <div class="text-center mb-4">
           <img src="/logo.jpeg" alt="Logo" style="height:60px;border-radius:50%;" class="mb-3" />
-          <h2 class="fw-bold" style="font-family:'Montserrat',sans-serif;">Ficha de <span class="text-gold">Anamnese</span></h2>
+          <h2 class="fw-bold" style="font-family:'Montserrat',sans-serif;">Ficha de <span class="text-gold">Acolhimento</span></h2>
           <p style="color:rgba(248,249,250,0.6); font-size:0.95rem;">Preencha com atenção. Suas respostas ajudarão a Joyce a preparar seu atendimento.</p>
         </div>
 
         <?php if ($enviado): ?>
           <div class="glass-card success-box">
             <i class="bi bi-check-circle"></i>
-            <h5 class="fw-bold mt-3">Anamnese enviada com sucesso!</h5>
+            <h5 class="fw-bold mt-3">Ficha enviada com sucesso!</h5>
             <p style="color:rgba(248,249,250,0.6);">A Joyce receberá suas respostas antes da consulta. Obrigada!</p>
             <a href="/" class="btn btn-gold mt-2">Voltar ao Site</a>
           </div>

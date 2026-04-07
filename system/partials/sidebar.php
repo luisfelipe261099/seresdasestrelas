@@ -12,7 +12,7 @@
       <i class="bi bi-people"></i><span>Pacientes</span>
     </a>
     <a href="anamnese-ver.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'anamnese-ver.php' ? 'active' : '' ?>">
-      <i class="bi bi-clipboard-pulse"></i><span>Anamneses</span>
+      <i class="bi bi-clipboard-pulse"></i><span>Fichas de Acolhimento</span>
     </a>
     <a href="blocos.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'blocos.php' ? 'active' : '' ?>">
       <i class="bi bi-stars"></i><span>Blocos</span>

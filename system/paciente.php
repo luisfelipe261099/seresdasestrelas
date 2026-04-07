@@ -150,7 +150,7 @@ $anamneses = $anam->fetchAll();
 
         <?php if (!empty($anamneses)): ?>
         <div class="glass-card p-4">
-          <h6 class="fw-bold mb-3"><i class="bi bi-clipboard-pulse me-2 text-gold"></i>Anamnese<?= count($anamneses) > 1 ? 's' : '' ?> (<?= count($anamneses) ?>)</h6>
+          <h6 class="fw-bold mb-3"><i class="bi bi-clipboard-pulse me-2 text-gold"></i>Ficha<?= count($anamneses) > 1 ? 's' : '' ?> de Acolhimento (<?= count($anamneses) ?>)</h6>
           <?php foreach ($anamneses as $idx => $anamnese): ?>
             <?php if ($idx > 0): ?><hr style="border-color:rgba(248,249,250,0.1);" /><?php endif; ?>
             <p class="text-muted-ice small mb-1">Enviada em <?= date('d/m/Y', strtotime($anamnese['criado_em'])) ?></p>

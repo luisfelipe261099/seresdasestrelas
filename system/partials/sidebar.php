@@ -17,6 +17,18 @@
     <a href="eventos-admin.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'eventos-admin.php' ? 'active' : '' ?>">
       <i class="bi bi-calendar-event"></i><span>Eventos</span>
     </a>
+
+    <div class="sidebar-divider"></div>
+
+    <a href="financeiro.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'financeiro.php' ? 'active' : '' ?>">
+      <i class="bi bi-wallet2"></i><span>Financeiro</span>
+    </a>
+    <a href="mensalidades.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'mensalidades.php' ? 'active' : '' ?>">
+      <i class="bi bi-receipt"></i><span>Mensalidades</span>
+    </a>
+    <a href="lancamentos.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'lancamentos.php' ? 'active' : '' ?>">
+      <i class="bi bi-journal-plus"></i><span>Lançamentos</span>
+    </a>
   </nav>
   <div class="sidebar-footer">
     <a href="logout.php" class="sidebar-link text-danger">

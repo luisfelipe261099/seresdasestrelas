@@ -161,7 +161,7 @@ $lista = $db->query('SELECT a.*, p.nome AS pac_nome FROM anamneses a LEFT JOIN p
   <script src="app.js"></script>
   <script>
     function copyAnamneseLink() {
-      const url = window.location.origin + '/se/system/anamnese.php';
+      const url = window.location.origin + '/system/anamnese.php';
       navigator.clipboard.writeText(url).then(() => {
         const btn = document.getElementById('btnCopyLink');
         const original = btn.innerHTML;

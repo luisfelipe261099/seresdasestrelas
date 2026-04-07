@@ -36,10 +36,14 @@ function getDB(): PDO {
 
     // TiDB Cloud exige SSL
     if (getenv('TIDB_SSL') !== 'false') {
-        $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
         $caPath = getenv('TIDB_CA_PATH');
         if ($caPath && file_exists($caPath)) {
             $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
+            $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
+        } else {
+            // Sem CA local: habilita SSL mas sem verificação de certificado
+            $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = false;
+            $options[PDO::MYSQL_ATTR_SSL_CA] = '';
         }
     }
 

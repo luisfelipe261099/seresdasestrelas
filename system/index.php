@@ -15,7 +15,7 @@ $bloco2        = $db->query("SELECT COUNT(*) FROM pacientes WHERE bloco_atual = 
 $bloco3        = $db->query("SELECT COUNT(*) FROM pacientes WHERE bloco_atual = 3 AND status_ativo = 1")->fetchColumn();
 
 // Sessões da semana
-$sessoesSemanais = $db->query("SELECT COUNT(*) FROM sessoes_notas WHERE data_sessao >= CURDATE() - INTERVAL WEEKDAY(CURDATE()) DAY AND data_sessao <= CURDATE() + INTERVAL (6 - WEEKDAY(CURDATE())) DAY")->fetchColumn();
+$sessoesSemanais = $db->query("SELECT COUNT(*) FROM sessoes_notas WHERE data_sessao >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY) AND data_sessao <= DATE_ADD(CURDATE(), INTERVAL 7-DAYOFWEEK(CURDATE()) DAY)")->fetchColumn();
 
 // Agenda do dia
 $agendaHoje = $db->query("

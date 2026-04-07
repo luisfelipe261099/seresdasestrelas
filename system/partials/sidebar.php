@@ -14,7 +14,7 @@
     <a href="anamnese-ver.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'anamnese-ver.php' ? 'active' : '' ?>">
       <i class="bi bi-clipboard-pulse"></i><span>Anamneses</span>
     </a>
-    <a href="../eventos.html" class="sidebar-link" target="_blank">
+    <a href="eventos-admin.php" class="sidebar-link <?= basename($_SERVER['PHP_SELF']) === 'eventos-admin.php' ? 'active' : '' ?>">
       <i class="bi bi-calendar-event"></i><span>Eventos</span>
     </a>
   </nav>

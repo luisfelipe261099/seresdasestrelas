@@ -14,6 +14,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "eventos.php",
+      "use": "vercel-php@0.7.1"
+    },
+    {
       "src": "system/**/*.php",
       "use": "vercel-php@0.7.1"
     },
@@ -23,6 +27,7 @@
     }
   ],
   "routes": [
+    { "src": "/eventos\\.php", "dest": "/eventos.php" },
     { "src": "/system/(.*\\.php)", "dest": "/system/$1" },
     { "src": "/system/(.*\\.css)", "dest": "/system/$1" },
     { "src": "/system/(.*\\.js)", "dest": "/system/$1" },

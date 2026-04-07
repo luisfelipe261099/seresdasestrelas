@@ -1,6 +1,11 @@
 <?php
-session_start();
-require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/auth.php';
+
+// Se já logado, redireciona
+if (_loadUserFromToken()) {
+    header('Location: index.php');
+    exit;
+}
 
 $erro = '';
 
@@ -16,11 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $stmt->fetch();
 
             if ($user && password_verify($senha, $user['senha_hash'])) {
-                session_regenerate_id(true);
-                $_SESSION['user_id']    = $user['id'];
-                $_SESSION['user_nome']  = $user['nome'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['user_nivel'] = $user['nivel'];
+                createAuthToken($user['id']);
                 header('Location: index.php');
                 exit;
             } else {

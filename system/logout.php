@@ -1,6 +1,5 @@
 <?php
-session_start();
-$_SESSION = [];
-session_destroy();
+require_once __DIR__ . '/auth.php';
+destroyAuthToken();
 header('Location: login.php');
 exit;

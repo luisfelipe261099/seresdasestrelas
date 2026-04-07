@@ -80,17 +80,3 @@ function whatsapp_link(string $num): string {
     if (!str_starts_with($clean, '55')) $clean = '55' . $clean;
     return 'https://wa.me/' . e($clean);
 }
-
-function csrf_token(): string {
-    if (empty($_SESSION['csrf'])) {
-        $_SESSION['csrf'] = bin2hex(random_bytes(32));
-    }
-    return $_SESSION['csrf'];
-}
-
-function csrf_check(): void {
-    if (!isset($_POST['csrf']) || !hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'])) {
-        http_response_code(403);
-        die('Token inválido.');
-    }
-}

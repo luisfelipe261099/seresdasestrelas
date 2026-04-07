@@ -1,0 +1,911 @@
+/* =========================================================
+   SERES DAS ESTRELAS — Custom Stylesheet
+   Dark Mode  ·  Glassmorphism  ·  Stellar Theme
+   ========================================================= */
+
+/* ---------- Design Tokens ---------- */
+:root {
+  --navy:       #0B132B;
+  --navy-light: #111b38;
+  --gold:       #E0A458;
+  --gold-hover: #c98d42;
+  --violet:     #5E548E;
+  --ice:        #F8F9FA;
+  --glass-bg:   rgba(94, 84, 142, 0.12);
+  --glass-border: rgba(224, 164, 88, 0.18);
+  --radius:     16px;
+  --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---------- Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: var(--navy);
+  color: var(--ice);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--ice);
+}
+
+a { text-decoration: none; }
+
+img { max-width: 100%; height: auto; }
+
+/* ---------- Utility ---------- */
+.text-gold { color: var(--gold) !important; }
+
+/* ---------- Glassmorphism Card ---------- */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(224, 164, 88, 0.12);
+}
+
+/* ---------- Buttons ---------- */
+.btn-gold {
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  padding: 0.7rem 2rem;
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.btn-gold:hover,
+.btn-gold:focus-visible {
+  background: var(--gold-hover);
+  color: var(--navy);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(224, 164, 88, 0.35);
+}
+
+/* ---------- NAVBAR ---------- */
+.glass-nav {
+  background: rgba(11, 19, 43, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(224, 164, 88, 0.1);
+  padding: 1rem 0;
+  transition: padding var(--transition), background var(--transition);
+}
+
+.glass-nav.scrolled {
+  padding: 0.5rem 0;
+  background: rgba(11, 19, 43, 0.92);
+}
+
+.navbar-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--ice) !important;
+  letter-spacing: 0.5px;
+}
+
+.navbar-logo {
+  height: 38px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.footer-logo {
+  height: 32px;
+  width: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nav-link {
+  color: rgba(248, 249, 250, 0.75) !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  transition: color var(--transition);
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--gold) !important;
+}
+
+/* ---------- HERO ---------- */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  padding: 140px 0 100px;
+  background:
+    radial-gradient(ellipse 600px 600px at 20% 30%, rgba(94, 84, 142, 0.25), transparent),
+    radial-gradient(ellipse 500px 500px at 80% 70%, rgba(224, 164, 88, 0.10), transparent),
+    linear-gradient(180deg, var(--navy) 0%, #0d1730 100%);
+  overflow: hidden;
+}
+
+/* ---- Starfield CSS Effect ---- */
+.stars-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at  10%  15%, rgba(248,249,250,0.8) 50%, transparent 100%),
+    radial-gradient(1px   1px   at  25%  42%, rgba(248,249,250,0.5) 50%, transparent 100%),
+    radial-gradient(1.2px 1.2px at  47%  8%,  rgba(224,164,88,0.7)  50%, transparent 100%),
+    radial-gradient(1px   1px   at  63%  65%, rgba(248,249,250,0.4) 50%, transparent 100%),
+    radial-gradient(1.8px 1.8px at  78%  22%, rgba(248,249,250,0.9) 50%, transparent 100%),
+    radial-gradient(1px   1px   at  88%  80%, rgba(94,84,142,0.6)   50%, transparent 100%),
+    radial-gradient(1.3px 1.3px at  35%  72%, rgba(248,249,250,0.6) 50%, transparent 100%),
+    radial-gradient(1px   1px   at  55%  38%, rgba(224,164,88,0.5)  50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at  92%  50%, rgba(248,249,250,0.7) 50%, transparent 100%),
+    radial-gradient(1px   1px   at  5%   90%, rgba(248,249,250,0.5) 50%, transparent 100%),
+    radial-gradient(1.2px 1.2px at  18%  58%, rgba(94,84,142,0.5)   50%, transparent 100%),
+    radial-gradient(1px   1px   at  72%  12%, rgba(248,249,250,0.6) 50%, transparent 100%),
+    radial-gradient(1.6px 1.6px at  42%  88%, rgba(224,164,88,0.4)  50%, transparent 100%),
+    radial-gradient(1px   1px   at  60%  95%, rgba(248,249,250,0.4) 50%, transparent 100%);
+  background-size: 100% 100%;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+.stars-bg--layer2 {
+  background-image:
+    radial-gradient(1px   1px   at  15%  25%, rgba(248,249,250,0.6) 50%, transparent 100%),
+    radial-gradient(1.4px 1.4px at  33%  55%, rgba(224,164,88,0.5)  50%, transparent 100%),
+    radial-gradient(1px   1px   at  50%  18%, rgba(248,249,250,0.4) 50%, transparent 100%),
+    radial-gradient(1.3px 1.3px at  68%  42%, rgba(94,84,142,0.6)   50%, transparent 100%),
+    radial-gradient(1px   1px   at  85%  75%, rgba(248,249,250,0.7) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at  8%   68%, rgba(248,249,250,0.5) 50%, transparent 100%),
+    radial-gradient(1px   1px   at  95%  35%, rgba(224,164,88,0.4)  50%, transparent 100%),
+    radial-gradient(1.2px 1.2px at  28%  82%, rgba(248,249,250,0.5) 50%, transparent 100%),
+    radial-gradient(1px   1px   at  75%  92%, rgba(94,84,142,0.4)   50%, transparent 100%),
+    radial-gradient(1.1px 1.1px at  45%  48%, rgba(248,249,250,0.3) 50%, transparent 100%);
+  animation: twinkle 8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.z-1 { position: relative; z-index: 1; }
+
+.hero-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.4rem;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(248, 249, 250, 0.75);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* ---------- SECTIONS COMMON ---------- */
+.section-pilares,
+.section-blocos,
+.section-sobre,
+.section-prova-social,
+.section-cta {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-pilares {
+  background:
+    radial-gradient(ellipse 500px 400px at 80% 20%, rgba(94, 84, 142, 0.12), transparent),
+    var(--navy);
+}
+
+.section-blocos {
+  background:
+    radial-gradient(ellipse 400px 400px at 15% 50%, rgba(224, 164, 88, 0.08), transparent),
+    var(--navy-light);
+}
+
+.section-sobre {
+  background: var(--navy);
+}
+
+.section-prova-social {
+  background: var(--navy-light);
+}
+
+.section-cta {
+  background:
+    radial-gradient(ellipse 600px 300px at 50% 80%, rgba(94, 84, 142, 0.18), transparent),
+    radial-gradient(ellipse 400px 400px at 50% 20%, rgba(224, 164, 88, 0.08), transparent),
+    var(--navy);
+  padding: 120px 0;
+}
+
+.section-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin-bottom: 0.8rem;
+}
+
+.section-subtitle {
+  color: rgba(248, 249, 250, 0.7);
+  max-width: 580px;
+  font-size: 1.05rem;
+}
+
+/* ---------- PILARES CARDS ---------- */
+.card-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: var(--gold);
+  background: rgba(224, 164, 88, 0.10);
+  border-radius: 50%;
+}
+
+.card-title-custom {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+  color: var(--ice);
+}
+
+.card-text-custom {
+  font-size: 0.92rem;
+  color: rgba(248, 249, 250, 0.7);
+  line-height: 1.65;
+}
+
+/* ---------- TIMELINE / BLOCOS ---------- */
+.timeline {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  padding-left: 60px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold), var(--violet));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item:last-child { margin-bottom: 0; }
+
+.timeline-marker {
+  position: absolute;
+  left: -60px;
+  top: 1.2rem;
+  width: 44px;
+  height: 44px;
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--gold);
+  z-index: 2;
+}
+
+.timeline-card { border-left: 3px solid var(--gold); }
+
+/* ---------- SOBRE ---------- */
+.about-photo-wrapper {
+  position: relative;
+  display: inline-block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.about-photo-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2px solid var(--glass-border);
+  pointer-events: none;
+}
+
+.about-photo {
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.about-text {
+  font-size: 1.05rem;
+  color: rgba(248, 249, 250, 0.8);
+  margin-bottom: 0.6rem;
+}
+
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat-number {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--gold);
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: rgba(248, 249, 250, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ---------- PROVA SOCIAL ---------- */
+.testimonial-card {
+  border: 1px solid rgba(224, 164, 88, 0.25);
+  position: relative;
+}
+
+.testimonial-icon {
+  font-size: 3rem;
+  color: var(--gold);
+  opacity: 0.3;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.testimonial-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ice);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+.testimonial-author {
+  font-size: 0.9rem;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* ---------- FOOTER ---------- */
+.site-footer {
+  background: var(--navy-light);
+  padding: 50px 0 30px;
+  border-top: 1px solid rgba(224, 164, 88, 0.1);
+}
+
+.footer-brand {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--ice);
+}
+
+.footer-brand:hover { color: var(--gold); }
+
+.footer-sub {
+  font-size: 0.85rem;
+  color: rgba(248, 249, 250, 0.5);
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1.2rem;
+  justify-content: center;
+}
+
+.footer-socials a {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  color: var(--ice);
+  font-size: 1.15rem;
+  transition: all var(--transition);
+}
+
+.footer-socials a:hover {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.footer-system-link {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(248, 249, 250, 0.5);
+  transition: color var(--transition);
+}
+
+.footer-system-link:hover { color: var(--gold); }
+
+.footer-divider {
+  border-color: rgba(248, 249, 250, 0.08);
+  margin: 2rem 0 1rem;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(248, 249, 250, 0.35);
+}
+
+/* ---------- FADE-IN ANIMATION ---------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.row > .fade-in:nth-child(2) { transition-delay: 0.1s; }
+.row > .fade-in:nth-child(3) { transition-delay: 0.2s; }
+.row > .fade-in:nth-child(4) { transition-delay: 0.3s; }
+
+/* ---------- RESPONSIVE ---------- */
+
+/* ---------- EVENTOS PAGE ---------- */
+.eventos-hero {
+  position: relative;
+  padding: 140px 0 60px;
+  background:
+    radial-gradient(ellipse 600px 600px at 20% 30%, rgba(94, 84, 142, 0.25), transparent),
+    radial-gradient(ellipse 500px 500px at 80% 70%, rgba(224, 164, 88, 0.10), transparent),
+    linear-gradient(180deg, var(--navy) 0%, #0d1730 100%);
+  overflow: hidden;
+}
+
+.section-eventos {
+  padding: 80px 0;
+  background: var(--navy);
+}
+
+.eventos-mes-badge {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gold);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.evento-card {
+  display: flex;
+  overflow: hidden;
+}
+
+.evento-date-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  background: rgba(224, 164, 88, 0.12);
+  border-right: 2px solid var(--gold);
+  padding: 1.5rem 0.8rem;
+}
+
+.evento-dia {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.evento-mes-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(248, 249, 250, 0.6);
+  margin-top: 4px;
+}
+
+.evento-body {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+.evento-horario {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.evento-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--ice);
+  margin-bottom: 0.5rem;
+}
+
+.evento-descricao {
+  font-size: 0.9rem;
+  color: rgba(248, 249, 250, 0.7);
+  line-height: 1.6;
+  margin-bottom: 0.8rem;
+}
+
+.evento-speakers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.speaker {
+  font-size: 0.85rem;
+  color: rgba(248, 249, 250, 0.8);
+}
+
+.speaker i {
+  color: var(--violet);
+}
+
+.evento-em-breve .evento-date-strip {
+  background: rgba(94, 84, 142, 0.10);
+  border-right-color: var(--violet);
+}
+
+.evento-em-breve .evento-dia {
+  color: var(--violet);
+}
+
+.evento-breve-icon {
+  font-size: 2.5rem;
+  color: var(--violet);
+  opacity: 0.5;
+}
+
+/* ---------- EVENTO DESTAQUE (index) ---------- */
+.section-evento-destaque {
+  padding: 80px 0;
+  background:
+    radial-gradient(ellipse 500px 400px at 50% 50%, rgba(224, 164, 88, 0.08), transparent),
+    var(--navy);
+}
+
+.evento-destaque-card {
+  position: relative;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(224, 164, 88, 0.3);
+}
+
+.evento-destaque-card:hover {
+  box-shadow: 0 16px 48px rgba(224, 164, 88, 0.15);
+}
+
+.evento-destaque-badge {
+  background: linear-gradient(135deg, var(--gold), #d4943e);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
+  display: inline-block;
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.evento-destaque-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 2.5rem;
+}
+
+.evento-destaque-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.evento-destaque-date .evento-dia {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 3rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.evento-destaque-date .evento-mes-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: rgba(248, 249, 250, 0.6);
+}
+
+.evento-horario-inline {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+.evento-destaque-info {
+  flex: 1;
+}
+
+.evento-destaque-titulo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--ice);
+  margin-bottom: 0.4rem;
+}
+
+.evento-destaque-desc {
+  font-size: 0.95rem;
+  color: rgba(248, 249, 250, 0.7);
+  line-height: 1.6;
+  margin-bottom: 0.7rem;
+}
+
+.evento-destaque-speakers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  font-size: 0.88rem;
+  color: rgba(248, 249, 250, 0.8);
+}
+
+.text-violet { color: var(--violet) !important; }
+
+.evento-destaque-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.evento-ver-todos {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: rgba(248, 249, 250, 0.5);
+  transition: color var(--transition);
+}
+
+.evento-ver-todos:hover {
+  color: var(--gold);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 991.98px) {
+  .hero-section { padding: 120px 0 80px; }
+  .section-pilares,
+  .section-blocos,
+  .section-sobre,
+  .section-prova-social,
+  .section-cta {
+    padding: 60px 0;
+  }
+  .section-cta { padding: 70px 0; }
+}
+
+@media (max-width: 767.98px) {
+  .hero-section { min-height: auto; padding: 100px 0 50px; }
+  .hero-title { font-size: 1.7rem; }
+  .hero-subtitle { font-size: 0.95rem; }
+  .hero-tag { font-size: 0.75rem; margin-bottom: 0.8rem; }
+
+  .section-pilares,
+  .section-blocos,
+  .section-sobre,
+  .section-prova-social,
+  .section-cta {
+    padding: 50px 0;
+  }
+
+  .section-title { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .section-subtitle { font-size: 0.92rem; }
+  .section-tag { font-size: 0.72rem; }
+
+  /* Cards pilares - mobile 2 colunas */
+  .card-icon { width: 48px; height: 48px; font-size: 1.3rem; margin-bottom: 0.7rem; }
+  .card-title-custom { font-size: 0.95rem; margin-bottom: 0.4rem; }
+  .card-text-custom { font-size: 0.82rem; line-height: 1.5; }
+
+  /* Timeline */
+  .timeline { padding-left: 48px; }
+  .timeline::before { left: 18px; }
+  .timeline-marker { left: -48px; width: 36px; height: 36px; font-size: 0.72rem; }
+  .timeline-item { margin-bottom: 1.5rem; }
+  .timeline-card { padding: 1rem !important; }
+  .timeline-card .card-title-custom { font-size: 0.92rem; }
+  .timeline-card .card-text-custom { font-size: 0.82rem; }
+
+  /* Sobre */
+  .about-photo { max-width: 260px; }
+  .about-text { font-size: 0.92rem; }
+
+  /* Stats */
+  .stat-badge { padding: 0.5rem 0.6rem !important; }
+  .stat-number { font-size: 1.1rem; }
+  .stat-label { font-size: 0.68rem; }
+
+  /* Testimonial */
+  .testimonial-card { padding: 1.5rem !important; }
+  .testimonial-text { font-size: 0.95rem; line-height: 1.6; }
+  .testimonial-icon { font-size: 2rem; }
+
+  /* Navbar */
+  .glass-nav .btn-gold {
+    margin-top: 0.75rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-brand { font-size: 1.05rem; }
+  .navbar-logo { height: 32px; }
+
+  /* Glass card hover desativado no mobile */
+  .glass-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Eventos page mobile */
+  .eventos-hero { padding: 100px 0 40px; }
+  .section-eventos { padding: 50px 0; }
+
+  .evento-card { flex-direction: column; }
+  .evento-date-strip {
+    flex-direction: row;
+    min-width: unset;
+    border-right: none;
+    border-bottom: 2px solid var(--gold);
+    padding: 0.8rem 1.2rem;
+    gap: 0.5rem;
+  }
+  .evento-em-breve .evento-date-strip {
+    border-bottom-color: var(--violet);
+  }
+  .evento-dia { font-size: 1.6rem; }
+  .evento-body { padding: 1.2rem; }
+  .evento-titulo { font-size: 1.05rem; }
+  .evento-descricao { font-size: 0.85rem; }
+  .speaker { font-size: 0.8rem; }
+
+  /* Evento destaque mobile */
+  .section-evento-destaque { padding: 50px 0; }
+  .evento-destaque-inner {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1rem;
+    text-align: center;
+  }
+  .evento-destaque-date { flex-direction: row; gap: 0.6rem; align-items: baseline; }
+  .evento-destaque-date .evento-dia { font-size: 2rem; }
+  .evento-destaque-titulo { font-size: 1.15rem; }
+  .evento-destaque-desc { font-size: 0.88rem; }
+  .evento-destaque-speakers { justify-content: center; font-size: 0.82rem; }
+  .evento-destaque-cta .btn-gold { width: 100%; }
+}
+
+@media (max-width: 575.98px) {
+  .hero-section { padding: 90px 0 40px; }
+  .hero-title { font-size: 1.45rem; }
+  .btn-gold.btn-lg { font-size: 0.9rem; padding: 0.6rem 1.5rem; }
+
+  .d-flex.gap-3 { gap: 0.4rem !important; }
+  .stat-badge { padding: 0.4rem 0.5rem !important; }
+  .stat-number { font-size: 0.95rem; }
+  .stat-label { font-size: 0.62rem; letter-spacing: 0.5px; }
+
+  .card-text-custom { font-size: 0.78rem; }
+  .card-title-custom { font-size: 0.88rem; }
+  .card-icon { width: 42px; height: 42px; font-size: 1.1rem; }
+
+  .section-pilares .mb-5 { margin-bottom: 1.5rem !important; }
+  .section-blocos .mb-5 { margin-bottom: 1.5rem !important; }
+}
+
+/* ---------- SELECTION ---------- */
+::selection {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb {
+  background: var(--violet);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
